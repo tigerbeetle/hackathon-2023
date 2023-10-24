@@ -55,14 +55,19 @@ Present a short demo (10 minutes max) of your work **in-person** if you're atten
 
 ## Prizes:
 
-### First place:
-[Steam Deck 64GB](https://www.steamdeck.com/hardware) all-in-one portable PC gaming. 
+<table><tr><td width="100px">
+<a href="https://www.steamdeck.com/hardware"><img src="assets/steam_deck_64G.png"/></a></td>
+<td><h3>First place: <a href="https://www.steamdeck.com/hardware">Steam Deck 64GB</a> all-in-one portable PC gaming. 
+</h3></td></tr>
+<tr><td>
+<a href="https://www.raspberrypi.com/products/raspberry-pi-400/"><img src="assets/raspberrypi_400.png"/></a></td>
+<td><h3>Second place: <a href="https://www.raspberrypi.com/products/raspberry-pi-400/">Raspberry Pi 400</a> personal computer kit. 
+</h3></td></tr>
+<tr><td>
+<a href="https://systemsdistributed.com/"><img src="assets/systems_distributed.png"/></a></td>
+<td><h3>Third place: Ticket for the next <a href="https://systemsdistributed.com/">Systems Distributed 2024</a> and TigerBeetle swag.
+</h3></td></tr></table>
 
-### Second place:
-[Raspberry Pi 400](https://www.raspberrypi.com/products/raspberry-pi-400/) personal computer kit.
-
-### Third place:
-Ticket for the next [Systems Distributed 2024](https://systemsdistributed.com/) and TigerBeetle swag.
 
 ## Evaluation criteria:
 
