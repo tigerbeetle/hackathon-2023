@@ -13,7 +13,7 @@ You can get together with colleagues or individually, **in person** or **remotel
     <table><tr valign="top">
     <td width="100"><img src="assets/safety.gif" align="left" margin ="16px" size="200px"/></td>
     <td>
-    <b>Example:</b> Run multiple TigerBeetles and measure the availability when one or more replicas crash or are partitioned from the network. You can run it in the cloud or on your own laptop using anything you want (e.g. Docker, Kubernetes, etc). For a little more fun, you can even run TigerBeetle in a cluster of RaspberryPi's!
+    <b>Example:</b> Run multiple TigerBeetles and measure the availability when one or more replicas crash or are partitioned from the network. You can run it on the cloud or on your own laptop using anything you want (e.g. Docker, Kubernetes, etc). For a little more fun, you can even run TigerBeetle in a cluster of RaspberryPi's!
     </td>
     </tr></table>
 
@@ -31,7 +31,7 @@ You can get together with colleagues or individually, **in person** or **remotel
     <table><tr valign="top">
     <td width="100"><img src="assets/experience.gif" align="left" margin ="16px"/></td>
     <td>
-    <b>Example:</b> Use TigerBeetle's double-entry account schema to solve common business problems that would require too much boilerplate code to implement with general-purpose databases, such as financial transfers, inventory movements, or just counting things There's no limit to your creativity!
+    <b>Example:</b> Use TigerBeetle's double-entry account schema to solve common business problems that would require too much boilerplate code to implement with general-purpose databases, such as financial transfers, inventory movements, or just counting things. There's no limit to your creativity!
     </td>
     </tr></table>
 
