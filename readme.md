@@ -52,7 +52,7 @@ Examples:
 
 Submit a pull request to this repository including all source code and artifacts you produced. Remember to describe your project and identify yourself and your teammates.
 
-Present a short demo (10 minutes max) of your work **in-person** if you're attending the Interledger Summit 2023, or **send a short recorded video** if you're not in Costa Rica 🇨🇷!
+Present a short demo (10 minutes max) of your work **in-person** if you're attending the Interledger Summit 2023, or **send a recorded video** if you're not in Costa Rica 🇨🇷!
 
 ## Prizes:
 
