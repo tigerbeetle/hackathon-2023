@@ -11,7 +11,7 @@ You can get together with colleagues or individually, **in person** or **remotel
 - **Safety Beetle:** Use TigerBeetle to improve durability and availability.
 
     <table><tr valign="top">
-    <td width="100"><img src="assets/safety.gif" align="left" margin ="16px" size="200px"/></td>
+    <td width="100px"><img src="assets/safety.gif"/></td>
     <td>
     <b>Example:</b> Run a TigerBeetle cluster and measure the availability when one or more replicas crash or are partitioned from the network. You can run it on the cloud or on your own laptop using anything you want (e.g. bare metal, Docker, Kubernetes, etc). For a little more fun, you could even run TigerBeetle on a cluster of RaspberryPi's!
     </td>
@@ -20,7 +20,7 @@ You can get together with colleagues or individually, **in person** or **remotel
 - **Performance Beetle:** Use TigerBeetle to improve throughput and latency.
 
     <table><tr valign="top">
-    <td width="100"><img src="assets/performance.gif" margin ="16px"/></td>
+    <td width="100px"><img src="assets/performance.gif"/></td>
     <td>
     <b>Example:</b> Showcase how to achieve low latency and high throughput by creating a simple application using TigerBeetle. Chef's kiss if you use TigerBeetle for online transactions processing (OLTP) in the data plane, together with an online general-purpose processing (OLGP) database in the control plane. The latter can be any SQL database, or NoSQL, in memory, or whatever you think of!
     </td>
@@ -29,9 +29,9 @@ You can get together with colleagues or individually, **in person** or **remotel
 - **Experience Beetle:** Use TigerBeetle to model business events as double-entry transfers between accounts.
 
     <table><tr valign="top">
-    <td width="100"><img src="assets/experience.gif" align="left" margin ="16px"/></td>
+    <td width="100px"><img src="assets/experience.gif"/></td>
     <td>
-    <b>Example:</b> Use TigerBeetle's double-entry account schema to solve common business problems that would require too much boilerplate code to implement with a general-purpose database. For example, a problem involving financial transactions, inventory movements, rate limiting, or just counting things (especially as they move from one person, party or place to another—the who/what/when/where/why/how much of OLTP). There's no limit to your creativity!
+    <b>Example:</b> Use TigerBeetle's double-entry account schema to solve common business problems that would require too much boilerplate code to implement with a general-purpose database. For example, a problem involving financial transactions, inventory movements, rate limiting, or just counting things (especially as they move from one person, party or place to another—the <i>who, what, when, where, why, how much</i> of OLTP). There's no limit to your creativity!
     </td>
     </tr></table>
 
@@ -55,15 +55,15 @@ Present a short demo (10 minutes max) of your work **in-person** if you're atten
 
 ## Prizes:
 
-<table><tr><td width="100px">
+<table><tr><td width="120px">
 <a href="https://www.steamdeck.com/hardware"><img src="assets/steam_deck_64G.png"/></a></td>
 <td><h3>First place: <a href="https://www.steamdeck.com/hardware">Steam Deck 64GB</a> all-in-one portable PC gaming. 
 </h3></td></tr>
-<tr><td>
+<tr><td width="120px">
 <a href="https://www.raspberrypi.com/products/raspberry-pi-400/"><img src="assets/raspberrypi_400.png"/></a></td>
 <td><h3>Second place: <a href="https://www.raspberrypi.com/products/raspberry-pi-400/">Raspberry Pi 400</a> personal computer kit. 
 </h3></td></tr>
-<tr><td>
+<tr><td width="120px">
 <a href="https://systemsdistributed.com/"><img src="assets/systems_distributed.png"/></a></td>
 <td><h3>Third place: Ticket for the next <a href="https://systemsdistributed.com/">Systems Distributed 2024</a> and TigerBeetle swag.
 </h3></td></tr></table>
