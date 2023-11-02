@@ -2,6 +2,8 @@
 
 We're excited to announce our first hackathon! It's a one-day event that will take place during the [Interledger Summit](https://interledger.org/summit) on Wednesday, 8 November 2023.
 
+<img src="assets/hackaton.png" width="480px"/>
+
 ## How to participate
 
 You can get together with colleagues or individually, **in person** or **remotely**, to deliver a small project.
