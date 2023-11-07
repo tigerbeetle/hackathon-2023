@@ -9,6 +9,7 @@ defmodule TigerSwarm.Application do
   def start(_type, _args) do
     children = [
       TigerSwarmWeb.Telemetry,
+      TigerSwarm.StatsServer,
       {DNSCluster, query: Application.get_env(:tigerswarm, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: TigerSwarm.PubSub},
       # Start a worker by calling: TigerSwarm.Worker.start_link(arg)
