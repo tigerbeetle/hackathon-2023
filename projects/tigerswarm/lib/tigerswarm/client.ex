@@ -10,18 +10,13 @@ defmodule TigerSwarm.Client do
   alias TigerSwarm.Client.RequestBatcher
 
   def update_batch_size(size) when size > 0 and size <= 8191 do
-    [
-      RequestBatcher.CreateAccount,
-      RequestBatcher.CreateTransfer,
-      RequestBatcher.LookupAccount,
-      RequestBatcher.LookupTransfer
-    ]
-    |> Enum.map(fn batcher ->
-      Task.async(fn ->
-        GenStateMachine.call(batcher, {:update_batch_size, size})
-      end)
-    end)
-    |> Task.await_many()
+    call_all_batchers({:update_batch_size, size})
+
+    :ok
+  end
+
+  def update_batch_timeout(timeout) when timeout >= 0 do
+    call_all_batchers({:update_batch_timeout, timeout})
 
     :ok
   end
@@ -40,6 +35,21 @@ defmodule TigerSwarm.Client do
 
   def lookup_transfer(<<_::1024>> = id) do
     dispatch_to_batcher(RequestBatcher.LookupTransfer, id)
+  end
+
+  defp call_all_batchers(call_payload) do
+    [
+      RequestBatcher.CreateAccount,
+      RequestBatcher.CreateTransfer,
+      RequestBatcher.LookupAccount,
+      RequestBatcher.LookupTransfer
+    ]
+    |> Enum.map(fn batcher ->
+      Task.async(fn ->
+        GenStateMachine.call(batcher, call_payload)
+      end)
+    end)
+    |> Task.await_many()
   end
 
   defp dispatch_to_batcher(batcher, payload) do

@@ -4,9 +4,12 @@ defmodule TigerSwarm.Client.RequestBatcher do
   alias TigerBeetlex.Response
 
   defmodule Data do
+    @initial_batch_timeout_ms 20
+
     defstruct batch: nil,
               batch_index_to_from: %{},
               batch_size: nil,
+              batch_timeout: @initial_batch_timeout_ms,
               batch_type: nil,
               batch_queue: :queue.new(),
               batch_start_time: nil,
@@ -18,9 +21,6 @@ defmodule TigerSwarm.Client.RequestBatcher do
               request_ref_to_callers: %{},
               submit_fun: nil
   end
-
-  # TODO: experiment with this
-  @batch_timeout_ms 50
 
   def start_link(opts) do
     name = Keyword.fetch!(opts, :name)
@@ -64,6 +64,10 @@ defmodule TigerSwarm.Client.RequestBatcher do
 
   def handle_event({:call, from}, {:update_batch_size, batch_size}, _state, data) do
     {:keep_state, put_next_batch_size(data, batch_size), {:reply, from, :ok}}
+  end
+
+  def handle_event({:call, from}, {:update_batch_timeout, timeout}, _state, data) do
+    {:keep_state, put_batch_timeout(data, timeout), {:reply, from, :ok}}
   end
 
   def handle_event({:call, _from}, {:new_request, _payload}, :prioritizing_responses, _data) do
@@ -206,11 +210,12 @@ defmodule TigerSwarm.Client.RequestBatcher do
   defp maybe_start_batch_timeout(data) do
     %{
       batch: batch,
+      batch_timeout: batch_timeout,
       current_batch_index: current_batch_index
     } = data
 
     if current_batch_index == 1 do
-      Process.send_after(self(), {:batch_timeout, batch}, @batch_timeout_ms)
+      Process.send_after(self(), {:batch_timeout, batch}, batch_timeout)
     end
 
     :ok
@@ -220,6 +225,10 @@ defmodule TigerSwarm.Client.RequestBatcher do
 
   defp put_next_batch_size(data, size) do
     %{data | next_batch_size: size}
+  end
+
+  defp put_batch_timeout(data, timeout) do
+    %{data | batch_timeout: timeout}
   end
 
   defp batch_full?(data) do
