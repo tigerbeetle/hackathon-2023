@@ -9,6 +9,23 @@ defmodule TigerSwarm.Client do
   alias TigerBeetlex.Transfer
   alias TigerSwarm.Client.RequestBatcher
 
+  def update_batch_size(size) when size > 0 and size <= 8191 do
+    [
+      RequestBatcher.CreateAccount,
+      RequestBatcher.CreateTransfer,
+      RequestBatcher.LookupAccount,
+      RequestBatcher.LookupTransfer
+    ]
+    |> Enum.map(fn batcher ->
+      Task.async(fn ->
+        GenStateMachine.call(batcher, {:update_batch_size, size})
+      end)
+    end)
+    |> Task.await_many()
+
+    :ok
+  end
+
   def create_account(%Account{} = account) do
     dispatch_to_batcher(RequestBatcher.CreateAccount, account)
   end

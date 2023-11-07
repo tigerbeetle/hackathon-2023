@@ -14,6 +14,7 @@ defmodule TigerSwarm.Client.RequestBatcher do
               concurrency_max: nil,
               current_batch_index: 0,
               in_flight_requests: 0,
+              next_batch_size: nil,
               request_ref_to_callers: %{},
               submit_fun: nil
   end
@@ -43,6 +44,7 @@ defmodule TigerSwarm.Client.RequestBatcher do
           batch_type: batch_type,
           client: client,
           concurrency_max: concurrency_max,
+          next_batch_size: batch_size,
           submit_fun: submit_fun
         }
         |> reset_batch()
@@ -58,6 +60,10 @@ defmodule TigerSwarm.Client.RequestBatcher do
 
   def handle_event(:enter, _old_state, _state, _data) do
     :keep_state_and_data
+  end
+
+  def handle_event({:call, from}, {:update_batch_size, batch_size}, _state, data) do
+    {:keep_state, put_next_batch_size(data, batch_size), {:reply, from, :ok}}
   end
 
   def handle_event({:call, _from}, {:new_request, _payload}, :prioritizing_responses, _data) do
@@ -212,6 +218,10 @@ defmodule TigerSwarm.Client.RequestBatcher do
 
   ### Helpers to manipulate the state machine data
 
+  defp put_next_batch_size(data, size) do
+    %{data | next_batch_size: size}
+  end
+
   defp batch_full?(data) do
     data.current_batch_index >= data.batch_size
   end
@@ -222,14 +232,15 @@ defmodule TigerSwarm.Client.RequestBatcher do
 
   defp reset_batch(data) do
     %{
-      batch_size: batch_size,
-      batch_type: batch_type
+      batch_type: batch_type,
+      next_batch_size: batch_size
     } = data
 
     %{
       data
       | current_batch_index: 0,
         batch_index_to_from: %{},
+        batch_size: batch_size,
         batch: batch_type.new!(batch_size)
     }
   end
