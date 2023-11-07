@@ -14,6 +14,8 @@ defmodule TigerSwarm.Application do
       # Start a worker by calling: TigerSwarm.Worker.start_link(arg)
       # {TigerSwarm.Worker, arg},
       # Start to serve requests, typically the last entry
+      {TigerSwarm.Client.Supervisor,
+       cluster_id: 0, addresses: ["3000"], concurrency_max: 4096, batch_size: 1},
       TigerSwarmWeb.Endpoint
     ]
 

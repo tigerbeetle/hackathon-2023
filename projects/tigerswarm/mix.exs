@@ -45,7 +45,10 @@ defmodule TigerSwarm.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:tigerbeetlex, github: "rbino/tigerbeetlex"},
+      {:gen_state_machine, "~> 3.0"},
+      {:nimble_options, "~> 1.0"}
     ]
   end
 
