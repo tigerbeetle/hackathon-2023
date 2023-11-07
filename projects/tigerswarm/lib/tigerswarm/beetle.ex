@@ -1,32 +1,57 @@
 defmodule TigerSwarm.Beetle do
-  use Task
+  use GenServer
 
   alias TigerBeetlex.Account
   alias TigerBeetlex.Transfer
   alias TigerSwarm.Beetle
 
-  @sleep_time 100
+  @request_interval 100
   @randomization_factor 0.25
 
-  def spawn(id) do
-    Task.Supervisor.start_child(Beetle.Supervisor, __MODULE__, :blast, [], name: via_tuple(id))
+  def start_link(opts) do
+    id = Keyword.fetch!(opts, :id)
+    GenServer.start_link(__MODULE__, opts, name: via_tuple(id))
   end
 
-  defp via_tuple(id) do
+  def via_tuple(id) do
     {:via, Registry, {Beetle.Registry, id}}
   end
 
-  def blast do
-    account_1 = %Account{id: Uniq.UUID.uuid7(:raw), ledger: 1, code: 1}
-    account_2 = %Account{id: Uniq.UUID.uuid7(:raw), ledger: 1, code: 1}
+  @impl true
+  def init(_opts) do
+    state = %{
+      credit_account_id: Uniq.UUID.uuid7(:raw),
+      debit_account_id: Uniq.UUID.uuid7(:raw)
+    }
+
+    {:ok, state, {:continue, :init}}
+  end
+
+  @impl true
+  def handle_continue(:init, state) do
+    %{
+      credit_account_id: credit_account_id,
+      debit_account_id: debit_account_id
+    } = state
+
+    account_1 = %Account{id: credit_account_id, ledger: 1, code: 1}
+    account_2 = %Account{id: debit_account_id, ledger: 1, code: 1}
 
     :ok = TigerSwarm.Client.create_account(account_1)
     :ok = TigerSwarm.Client.create_account(account_2)
 
-    transfer_forever(account_1.id, account_2.id)
+    schedule_next_transfer()
+
+    {:noreply, state}
   end
 
-  defp transfer_forever(credit_account_id, debit_account_id) do
+  @impl true
+  def handle_info(:transfer, state) do
+    %{
+      credit_account_id: credit_account_id,
+      debit_account_id: debit_account_id
+    } = state
+
     :ok =
       %Transfer{
         id: Uniq.UUID.uuid7(:raw),
@@ -38,12 +63,24 @@ defmodule TigerSwarm.Beetle do
       }
       |> TigerSwarm.Client.create_transfer()
 
-    @sleep_time
-    |> randomized_timeout(@randomization_factor)
-    |> Process.sleep()
+    schedule_next_transfer()
 
-    # Swap them back and forth
-    transfer_forever(debit_account_id, credit_account_id)
+    {:noreply, swap_accounts(state)}
+  end
+
+  defp swap_accounts(state) do
+    %{
+      credit_account_id: state.debit_account_id,
+      debit_account_id: state.credit_account_id
+    }
+  end
+
+  defp schedule_next_transfer do
+    Process.send_after(
+      self(),
+      :transfer,
+      randomized_timeout(@request_interval, @randomization_factor)
+    )
   end
 
   # Returns base_timeout +/- randomization_factor
