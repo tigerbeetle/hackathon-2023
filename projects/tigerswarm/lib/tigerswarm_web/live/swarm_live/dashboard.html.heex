@@ -1,0 +1,10 @@
+<.simple_form for={@form} phx-change="validate" phx-submit="update">
+  <div class="flex gap-24">
+    <.input field={@form[:swarm_count]} label="Swarm Count"/>
+    <.input field={@form[:batch_size]} label="Batch Size"/>
+    <.input field={@form[:batch_timeout]} label="Batch Timeout"/>
+  </div>
+  <:actions>
+    <.button>Update</.button>
+  </:actions>
+</.simple_form>

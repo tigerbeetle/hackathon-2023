@@ -17,7 +17,7 @@ defmodule TigerSwarmWeb.Router do
   scope "/", TigerSwarmWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", SwarmLive.Dashboard
   end
 
   # Other scopes may use custom stacks.
