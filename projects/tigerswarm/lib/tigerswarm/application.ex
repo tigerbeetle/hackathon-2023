@@ -16,6 +16,8 @@ defmodule TigerSwarm.Application do
       # Start to serve requests, typically the last entry
       {TigerSwarm.Client.Supervisor,
        cluster_id: 0, addresses: ["3000"], concurrency_max: 4096, batch_size: 1},
+      {Registry, keys: :unique, name: TigerSwarm.Beetle.Registry},
+      {Task.Supervisor, name: TigerSwarm.Beetle.Supervisor},
       TigerSwarmWeb.Endpoint
     ]
 

@@ -48,7 +48,8 @@ defmodule TigerSwarm.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:tigerbeetlex, github: "rbino/tigerbeetlex"},
       {:gen_state_machine, "~> 3.0"},
-      {:nimble_options, "~> 1.0"}
+      {:nimble_options, "~> 1.0"},
+      {:uniq, "~> 0.6"}
     ]
   end
 
