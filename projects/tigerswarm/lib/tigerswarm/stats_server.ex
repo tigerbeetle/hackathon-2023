@@ -3,6 +3,8 @@ defmodule TigerSwarm.StatsServer do
 
   require Logger
 
+  alias TigerSwarm.BatchStats
+  alias TigerSwarm.RequestStats
   alias TigerSwarm.StatsServer
 
   defmodule State do
@@ -59,26 +61,25 @@ defmodule TigerSwarm.StatsServer do
       finished_batches: finished_batches
     } = state
 
-    request_count = Enum.count(finished_requests)
-    batch_count = Enum.count(finished_batches)
+    if finished_requests != [] do
+      request_stats = %RequestStats{
+        interval: @stats_interval,
+        stats: Statistex.statistics(finished_requests, percentiles: [90, 95, 99, 99.9])
+      }
 
-    Logger.info("Requests per second: #{request_count}")
-    Logger.info("Batches per second: #{batch_count}")
+      broadcast("request_stats", {:request_stats, request_stats})
+    end
+
+    if finished_batches != [] do
+      batch_stats = %BatchStats{
+        interval: @stats_interval,
+        stats: Statistex.statistics(finished_batches, percentiles: [90, 95, 99, 99.9])
+      }
+
+      broadcast("batch_stats", {:batch_stats, batch_stats})
+    end
+
     Process.send_after(self(), :emit_stats, @stats_interval)
-
-    if request_count > 0 do
-      request_stats = Statistex.statistics(finished_requests, percentiles: [90, 95, 99, 99.9])
-      Logger.info("Request average duration: #{request_stats.average}")
-      Logger.info("Request stddev: #{request_stats.standard_deviation}")
-      Logger.info("Request percentiles: #{inspect(request_stats.percentiles)}")
-    end
-
-    if batch_count > 0 do
-      batch_stats = Statistex.statistics(finished_batches, percentiles: [90, 95, 99, 99.9])
-      Logger.info("Batch average duration: #{batch_stats.average}")
-      Logger.info("Batch stddev: #{batch_stats.standard_deviation}")
-      Logger.info("Batch percentiles: #{inspect(batch_stats.percentiles)}")
-    end
 
     new_state =
       %{
@@ -88,5 +89,9 @@ defmodule TigerSwarm.StatsServer do
       }
 
     {:noreply, new_state}
+  end
+
+  defp broadcast(topic, payload) do
+    Phoenix.PubSub.broadcast(TigerSwarm.PubSub, topic, payload)
   end
 end
