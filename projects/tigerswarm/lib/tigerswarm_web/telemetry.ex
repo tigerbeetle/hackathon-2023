@@ -51,6 +51,16 @@ defmodule TigerSwarmWeb.Telemetry do
         unit: {:native, :millisecond}
       ),
 
+      # TigerSwarm Metrics
+      counter("tigerswarm.request.stop.duration"),
+      summary("tigerswarm.request.stop.duration",
+        unit: {:native, :millisecond}
+      ),
+      counter("tigerswarm.batch.stop.duration"),
+      summary("tigerswarm.batch.stop.duration",
+        unit: {:native, :millisecond}
+      ),
+
       # VM Metrics
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
       summary("vm.total_run_queue_lengths.total"),
