@@ -1,0 +1,19 @@
+# fly.toml app configuration file generated for beetle on 2023-11-08T15:02:48-06:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "beetle"
+primary_region = "qro"
+
+[build]
+
+[[mounts]]
+  source = "myapp_data"
+  destination = "/data"
+
+[[services]]
+  internal_port = 5000
+  protocol = "tcp"
+  [[services.ports]]
+      port = "5000"
