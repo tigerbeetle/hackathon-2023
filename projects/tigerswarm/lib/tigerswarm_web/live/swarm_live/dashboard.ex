@@ -95,6 +95,7 @@ defmodule TigerSwarmWeb.SwarmLive.Dashboard do
 
     {data, types}
     |> Ecto.Changeset.cast(attrs, Map.keys(types))
+    |> Ecto.Changeset.validate_required(Map.keys(types))
     |> Ecto.Changeset.validate_number(:swarm_count, greater_than_or_equal_to: 0)
     |> Ecto.Changeset.validate_number(:batch_timeout, greater_than_or_equal_to: 0)
     |> Ecto.Changeset.validate_number(:batch_size, greater_than: 0, less_than_or_equal_to: 8191)
