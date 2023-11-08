@@ -8,3 +8,12 @@
     <.button>Update</.button>
   </:actions>
 </.simple_form>
+
+<div class="text-3xl mt-10 flex flex-col gap-8">
+  <p>Requests per second: <%= if @request_stats, do: requests_per_second(@request_stats), else: "-" %></p>
+  <p>Batches per second: <%= if @batch_stats, do: batches_per_second(@batch_stats), else: "-" %></p>
+  <p>Req avg latency: <%= if @request_stats, do: request_avg_latency(@request_stats), else: "-" %></p>
+  <p>Req P99 latency: <%= if @request_stats, do: request_p99_latency(@request_stats), else: "-" %></p>
+  <p>Batch avg latency: <%= if @batch_stats, do: batch_avg_latency(@batch_stats), else: "-" %></p>
+  <p>Batch P99 latency: <%= if @batch_stats, do: batch_p99_latency(@batch_stats), else: "-" %></p>
+</div>

@@ -27,6 +27,8 @@ defmodule TigerSwarmWeb.SwarmLive.Dashboard do
       |> assign(:page_title, "TigerSwarm")
       |> assign(:parameters, initial_params)
       |> assign(:form, form)
+      |> assign(:request_stats, nil)
+      |> assign(:batch_stats, nil)
 
     {:ok, socket}
   end
@@ -96,5 +98,29 @@ defmodule TigerSwarmWeb.SwarmLive.Dashboard do
     |> Ecto.Changeset.validate_number(:swarm_count, greater_than_or_equal_to: 0)
     |> Ecto.Changeset.validate_number(:batch_timeout, greater_than_or_equal_to: 0)
     |> Ecto.Changeset.validate_number(:batch_size, greater_than: 0, less_than_or_equal_to: 8191)
+  end
+
+  defp requests_per_second(request_stats) do
+    round(1_000 / request_stats.interval * request_stats.stats.sample_size)
+  end
+
+  defp request_avg_latency(request_stats) do
+    request_stats.stats.average
+  end
+
+  defp request_p99_latency(request_stats) do
+    request_stats.stats.percentiles[99]
+  end
+
+  defp batches_per_second(batch_stats) do
+    round(1_000 / batch_stats.interval * batch_stats.stats.sample_size)
+  end
+
+  defp batch_avg_latency(batch_stats) do
+    batch_stats.stats.average
+  end
+
+  defp batch_p99_latency(batch_stats) do
+    batch_stats.stats.percentiles[99]
   end
 end
