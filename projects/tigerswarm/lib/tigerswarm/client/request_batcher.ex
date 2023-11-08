@@ -62,6 +62,14 @@ defmodule TigerSwarm.Client.RequestBatcher do
     :keep_state_and_data
   end
 
+  def handle_event({:call, from}, :get_batch_size, _state, data) do
+    {:keep_state_and_data, {:reply, from, data.next_batch_size}}
+  end
+
+  def handle_event({:call, from}, :get_batch_timeout, _state, data) do
+    {:keep_state_and_data, {:reply, from, data.batch_timeout}}
+  end
+
   def handle_event({:call, from}, {:update_batch_size, batch_size}, _state, data) do
     {:keep_state, put_next_batch_size(data, batch_size), {:reply, from, :ok}}
   end

@@ -11,7 +11,11 @@ defmodule TigerSwarmWeb.SwarmLive.Dashboard do
       :ok = subscribe("batch_stats")
     end
 
-    initial_params = %{swarm_count: 0, batch_size: 1, batch_timeout: 20}
+    initial_params = %{
+      swarm_count: Swarm.get_count(),
+      batch_size: Client.get_batch_size(),
+      batch_timeout: Client.get_batch_timeout()
+    }
 
     form =
       initial_params

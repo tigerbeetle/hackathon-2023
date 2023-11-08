@@ -9,6 +9,16 @@ defmodule TigerSwarm.Client do
   alias TigerBeetlex.Transfer
   alias TigerSwarm.Client.RequestBatcher
 
+  def get_batch_size do
+    # Just query one batcher since they all should have the same one
+    GenStateMachine.call(RequestBatcher.CreateTransfer, :get_batch_size)
+  end
+
+  def get_batch_timeout do
+    # Just query one batcher since they all should have the same one
+    GenStateMachine.call(RequestBatcher.CreateTransfer, :get_batch_timeout)
+  end
+
   def update_batch_size(size) when size > 0 and size <= 8191 do
     call_all_batchers({:update_batch_size, size})
 

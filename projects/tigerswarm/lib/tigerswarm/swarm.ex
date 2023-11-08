@@ -7,12 +7,14 @@ defmodule TigerSwarm.Swarm do
     DynamicSupervisor.start_link(__MODULE__, init_arg, name: __MODULE__)
   end
 
-  def scale_to(count) do
-    current_count =
-      DynamicSupervisor.count_children(__MODULE__)
-      |> Map.fetch!(:workers)
+  def get_count do
+    DynamicSupervisor.count_children(__MODULE__)
+    |> Map.fetch!(:workers)
+  end
 
-    scale(current_count, count)
+  def scale_to(count) do
+    get_count()
+    |> scale(count)
   end
 
   defp scale(current, target) when target == current, do: :ok
