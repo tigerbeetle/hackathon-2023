@@ -4,6 +4,14 @@ We're excited to announce our first hackathon! It's a one-day event that will ta
 
 <img src="assets/hackaton.png" width="480px"/>
 
+## UPDATED: Winners! 
+
+- 🥇 [TigerBeetle Schema Wizard](https://github.com/tigerbeetle/hackathon-2023/pull/3) by [Evan Schwartz](https://github.com/emschwartz).
+
+- 🥈 [TigerSwarm](https://github.com/tigerbeetle/hackathon-2023/pull/2) by [Riccardo Binetti](https://github.com/rbino).
+
+- 🥉 [Teaching the beetle to fly 💸](https://github.com/tigerbeetle/hackathon-2023/pull/4) by [Cairin Michie](https://github.com/cairin).
+
 ## How to participate
 
 You can get together with colleagues or individually, **in person** or **remotely**, to deliver a small project.
