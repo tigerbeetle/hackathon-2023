@@ -1,0 +1,11 @@
+# This is a simple schema that the TigerBeetle Schema Wizard
+# can use to generate client code to interact with TigerBeetle
+
+[ledgers]
+
+[ledgers.eur]
+type = "simple_bank_accounts"
+
+[ledgers.usd]
+type = "simple_bank_accounts"
+allow_negative = false        # change this and you're going to jail!
